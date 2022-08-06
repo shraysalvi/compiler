@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>File manager</title>
+</head>
+<body>
+<div align="center">
+    <h1>Local file system</h1>
+    <p><strong>CWD: </strong>{{ current_working_directory }}</p>
+</div>
+
+<ul>
+    <div style="display: flex; gap: 10%;">
+        <form action="{% url 'make_dir' %}">
+            <input name="folder_name" type="text" required/>
+            <button type="submit">New Folder</button>
+        </form>
+
+        <form action="{% url 'make_file' current_working_directory %}">
+            <input name="file_name" type="text" required/>
+            <button type="submit">Create File</button>
+        </form>
+    </div>
+    <li style="font-size: 30px"><a href="{% url 'level_up' %}">.. Back</a></li>
+    {% for item in all_list %}
+        {% if item not in files %}
+            <li>DIR: <a href="{% url 'change_dir' item %}">{{ item }}</a>
+                <span style="float: right;">Delete: <a href="{% url 'remove_dir' item %}">{{ item }}"</a></span>
+            </li>
+        {% else %}
+            <li>FILE: <a href="{% url 'edit_file' item current_working_directory %}">{{ item }}</a>
+                <span style="float: right;">Delete:
+                    <a href="{% url 'remove_file' item current_working_directory %}">{{ item }}"</a></span>
+            </li>
+        {% endif %}
+        {% comment %}        {% if '.' not in item %}
+            <li><strong><a href="/cd?path={{ current_working_directory + '/' + item}}">{{ item }}</a></strong><a
+                    href="/rm?dir={{ item }}"> X</a></li>
+        {% elif '.txt' in item or '.py' in item or '.json' in item %}
+            <li><strong><a href="/view?file={{ current_working_directory + '/' + item}}">{{ item }}</a></strong></li>
+        {% else %}
+            <li>{{ item }}</li>
+        {% endif %}{% endcomment %}
+    {% endfor %}
+</ul>
+</body>
+</html>

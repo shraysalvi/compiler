@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Compiler</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+</head>
+
+<body class="container" style="padding: 50px;">
+    <div class="form-floating" style="padding: 50px;">
+        <textarea style="height: 200px" class="form-control placeholder-glow" placeholder="Code Here" id="code">
+def check_test():
+    print("Hello")
+    return int(90)
+        </textarea>
+        <label for="code">Code</label>
+    </div>
+    <button type="button" onclick="run_code()" class="btn btn-outline-primary">Submit</button>
+    <button type="button" onclick="test_code()" class="btn btn-outline-info">Test</button>
+    <div class="card" style="margin-top: 30px;">
+        <div id="output" class="card-body">
+            Output
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    function run_code() {
+        $.ajax({
+            url: "/run/",
+            type: "GET",
+            data: {
+                code: $('#code').val()
+            },
+
+            success: function (data) {
+                if (data.data.error) {
+                    $('#output').html("<pre>" + data.data.error + "</pre>");                    
+                }
+                if (data.data.output) {
+                    $('#output').html("<pre>" + data.data.output + "</pre>");                    
+                }
+                console.log(data)
+            },
+
+            error: function (xhr, errmsg, err) {
+                console.log("Error")
+            }
+        });
+    };
+
+    function test_code() {
+        $.ajax({
+            url: "/test/",
+            type: "GET",
+            data: {
+                code: $('#code').val()
+            },
+
+            // handle a successful response
+            success: function (data) {
+                if (data.data.error) {
+                    $('#output').html("<pre>" + data.data.error + "</pre>");                    
+                }
+                if (data.data.output) {
+                    $('#output').html("<pre>" + data.data.output + "</pre>");                    
+                }
+                console.log(data)
+            },
+
+            // handle a non-successful response
+            error: function (xhr, errmsg, err) {
+                console.log("Error")
+            }
+        });
+    };
+</script>
+
+</html>
