@@ -23,16 +23,16 @@
     </div>
     <li style="font-size: 30px"><a href="{% url 'level_up' %}">.. Back</a></li>
     {% for item in all_list %}
-        {% if item not in files %}
+    {% if '.' not in item %}
             <li>DIR: <a href="{% url 'change_dir' item %}">{{ item }}</a>
                 <span style="float: right;">Delete: <a href="{% url 'remove_dir' item %}">{{ item }}"</a></span>
             </li>
-        {% else %}
+    {% else %}
             <li>FILE: <a href="{% url 'edit_file' item current_working_directory %}">{{ item }}</a>
                 <span style="float: right;">Delete:
                     <a href="{% url 'remove_file' item current_working_directory %}">{{ item }}"</a></span>
             </li>
-        {% endif %}
+    {% endif %}
         {% comment %}        {% if '.' not in item %}
             <li><strong><a href="/cd?path={{ current_working_directory + '/' + item}}">{{ item }}</a></strong><a
                     href="/rm?dir={{ item }}"> X</a></li>
