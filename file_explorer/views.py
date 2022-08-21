@@ -9,7 +9,7 @@ def root(request):
     files = ''
     return render(request, 'intro.html', {
         'current_working_directory': os.getcwd(),
-        'all_list': subprocess.check_output('dir /b /o', universal_newlines=True).split('\n')[0:-1],
+        'all_list': subprocess.check_output('dir', universal_newlines=True).split('\n')[0:-1],
         'files': files,
     })
 
