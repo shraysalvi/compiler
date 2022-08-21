@@ -68,7 +68,7 @@ def run_code(request):
     with open("codes/code.py", "w") as file:
         file.write(code)
     cmd = ["python3", "codes/code.py"]
-    sp = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE, 
+    sp = subprocess.Popen(cmd, stdin=subprocess.PIPE, 
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                             universal_newlines=True)
     try:
