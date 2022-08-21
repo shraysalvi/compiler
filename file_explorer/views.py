@@ -6,10 +6,7 @@ import shutil
 
 
 def root(request):
-    try:
-        files = subprocess.check_output('dir /a-d /b', universal_newlines=True).split('\n')
-    except subprocess.CalledProcessError:
-        files = ''
+    files = ''
     return render(request, 'intro.html', {
         'current_working_directory': os.getcwd(),
         'all_list': subprocess.check_output('dir /b /o', universal_newlines=True).split('\n')[0:-1],
