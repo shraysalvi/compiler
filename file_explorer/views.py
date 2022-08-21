@@ -7,12 +7,12 @@ import shutil
 
 def root(request):
     try:
-        files = subprocess.check_output('dir /a-d /b', shell=True, universal_newlines=True).split('\n')
+        files = subprocess.check_output('dir /a-d /b', universal_newlines=True).split('\n')
     except subprocess.CalledProcessError:
         files = ''
     return render(request, 'intro.html', {
         'current_working_directory': os.getcwd(),
-        'all_list': subprocess.check_output('dir /b /o', shell=True, universal_newlines=True).split('\n')[0:-1],
+        'all_list': subprocess.check_output('dir /b /o', universal_newlines=True).split('\n')[0:-1],
         'files': files,
     })
 
@@ -71,7 +71,7 @@ def run_code(request):
     with open("codes/code.py", "w") as file:
         file.write(code)
     cmd = ["python3", "codes/code.py"]
-    sp = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE, 
+    sp = subprocess.Popen(cmd, stdin=subprocess.PIPE, 
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                             universal_newlines=True)
     try:
