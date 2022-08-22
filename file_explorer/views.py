@@ -67,7 +67,7 @@ def run_code(request):
     code = request.GET.get('code')
     with open("codes/code.py", "w") as file:
         file.write(code)
-    cmd = ['script.sh']  
+    cmd = ['bash script.sh']  
 #     cmd = ["python3", "codes/code.py"]
     sp = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE, 
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
